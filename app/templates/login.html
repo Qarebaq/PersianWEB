@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}ورود{% endblock %}
+{% block content %}
+<h2>ورود</h2>
+<form method="post">
+    نام کاربری: <input type="text" name="username" required><br>
+    رمز عبور: <input type="password" name="password" required><br>
+    <input type="submit" value="ورود">
+</form>
+{% endblock %}

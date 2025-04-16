@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'ایجاد مقاله' if mode == 'new' else 'ویرایش مقاله' }}{% endblock %}
+{% block content %}
+<h2>{{ 'ایجاد مقاله جدید' if mode == 'new' else 'ویرایش مقاله' }}</h2>
+<form method="post" enctype="multipart/form-data">
+    عنوان: <input type="text" name="title" value="{{ article.title if mode == 'edit' else '' }}"><br>
+    متن مقاله:<br>
+    <textarea name="content" rows="10" cols="60">{{ article.content if mode == 'edit' else '' }}</textarea><br>
+    تصویر: <input type="file" name="image"><br>
+    <input type="submit" value="{{ 'ثبت' if mode == 'new' else 'ذخیره تغییرات' }}">
+</form>
+{% endblock %}

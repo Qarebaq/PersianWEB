@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ویکی ساده{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('articles.index') }}">خانه</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('articles.create_article') }}">مقاله جدید</a>
+            <a href="{{ url_for('auth.logout') }}">خروج</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}">ورود</a>
+            <a href="{{ url_for('auth.register') }}">ثبت‌نام</a>
+        {% endif %}
+    </nav>
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

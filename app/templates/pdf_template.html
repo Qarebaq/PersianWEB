@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head><meta charset="UTF-8"><title>{{ article.title }}</title></head>
+<body>
+<h1>{{ article.title }}</h1>
+{% if article.image %}
+    <img src="{{ 'app/static/uploads/' + article.image }}" width="300"><br>
+{% endif %}
+<p>{{ article.content }}</p>
+</body>
+</html>

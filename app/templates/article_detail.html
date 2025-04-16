@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+<h2>{{ article.title }}</h2>
+{% if article.image %}
+    <img src="{{ url_for('static', filename='uploads/' + article.image) }}" width="300"><br>
+{% endif %}
+<p>{{ article.content }}</p>
+
+<a href="{{ url_for('articles.edit_article', id=article.id) }}">ویرایش</a> |
+<a href="{{ url_for('articles.article_pdf', id=article.id) }}">دانلود PDF</a>
+<form method="post" action="{{ url_for('articles.delete_article', id=article.id) }}">
+    <button type="submit">حذف</button>
+</form>
+
+<h4>سوابق ویرایش:</h4>
+<ul>
+    {% for edit in article.edits %}
+        <li>{{ edit.editor.username }} در {{ edit.edited_at.strftime('%Y-%m-%d %H:%M') }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
