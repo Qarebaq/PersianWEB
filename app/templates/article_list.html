@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
 {% block title %}مقالات{% endblock %}
 {% block content %}
+
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<style>
+    body {
+        margin: 30px;
+        direction: rtl;
+        font-family: 'Vazirmatn', sans-serif;
+        background-color: #f4f4f4;
+        color: #cb1f1f;
+    }
+
+    </style>
 <h2>لیست مقالات</h2>
 <ul>
     {% for article in articles %}
-        <li><a href="{{ url_for('articles.view_article', id=article.id) }}">{{ article.title }}</a></li>
+        <li><a href="{{ url_for('articles.view_article', id=article.id) }}">{{ article.title }} ------ نوشته شده توسط {{article.author.username}} در تاریخ {{article.created_at.year}}/{{article.created_at.month}}/{{article.created_at.day}} در ساعت {{article.created_at.hour}}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

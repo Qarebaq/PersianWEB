@@ -24,6 +24,11 @@ def view_article(id):
 def create_article():
     if request.method == 'POST':
         title = request.form['title']
+        author = request.form['author']
+        create_time = datetime.now()
+        create_time = str(create_time.year) + '-' + str(create_time.month) + '-' + str(create_time.day) 
+        if not title or not author:
+            flash('عنوان و نویسنده الزامی است.')
         content = request.form['content']
         image_file = request.files['image']
         filename = None
@@ -31,7 +36,7 @@ def create_article():
             filename = secure_filename(image_file.filename)
             image_file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
 
-        article = Article(title=title, content=content, image=filename, user_id=current_user.id)
+        article = Article(title=title, content=content, image=filename, user_id=current_user.id ,author=current_user.username , created_at=create_time )
         db.session.add(article)
         db.session.commit()
         return redirect(url_for('articles.index'))

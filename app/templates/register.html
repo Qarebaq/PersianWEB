@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 {% block title %}ثبت‌نام{% endblock %}
 {% block content %}
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    body {
+        direction: rtl;
+        font-family: 'Vazirmatn', sans-serif;
+        background-color: #f4f4f4;
+        color: #cb1f1f;
+    }
+    </style>
 <h2>ثبت‌نام</h2>
 <form method="post">
     نام کاربری: <input type="text" name="username" required><br>

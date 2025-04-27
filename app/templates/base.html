@@ -3,9 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}ویکی ساده{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
 </head>
+<style>
+    body {
+        direction: rtl;
+        font-family: 'Vazirmatn', sans-serif;
+        background-color: #f4f4f4;
+        color: #cb1f1f;
+    }
+    nav {
+        margin: 20px;
+    }
+    nav a {
+        margin-right: 10px;
+        text-decoration: none;
+        color: #cb1f1f;
+    }
+    .fade-out {
+  animation: vanish 3s forwards;
+}
+
+@keyframes vanish {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+}
+    </style>
 <body>
     <nav>
+
         <a href="{{ url_for('articles.index') }}">خانه</a>
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('articles.create_article') }}">مقاله جدید</a>
@@ -16,6 +47,11 @@
         {% endif %}
     </nav>
     <hr>
+
+    {% if current_user.is_authenticated %}
+    <p class="fade-out">{{ current_user.username }} , خوش آمدید!</p>
+    {% endif %}
+
     {% block content %}{% endblock %}
 </body>
 </html>
