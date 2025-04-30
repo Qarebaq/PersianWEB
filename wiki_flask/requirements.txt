@@ -1,0 +1,8 @@
+Flask
+Flask-Login
+Flask-SQLAlchemy
+Flask-WTF
+WTForms
+Werkzeug
+requests
+captcha

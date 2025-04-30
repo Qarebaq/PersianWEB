@@ -11,20 +11,143 @@
     body {
         direction: rtl;
         font-family: 'Vazirmatn', sans-serif;
-        background-color: #f4f4f4;
-        color: #cb1f1f;
+
     }
-    nav {
+    .nav {
+        z-index: 4;
         margin: 20px;
     }
-    nav a {
-        margin-right: 10px;
-        text-decoration: none;
-        color: #cb1f1f;
-    }
+
     .fade-out {
   animation: vanish 3s forwards;
 }
+
+a{
+    z-index: -5;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#myCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* انیمیشن به‌عنوان بک‌گراند */
+}
+#formy {
+
+    position: relative; /* اصلاح موقعیت فرم */
+            margin: 50px auto; /* افزودن فاصله به فرم */
+            max-width: 900px; /* تنظیم عرض فرم */
+            background-color: rgba(189, 23, 189, 0.6); /* پس‌زمینه بنفش شفاف */
+            backdrop-filter: blur(30px); /* محو کردن پشت فرم */
+            padding: 30px 50px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            color: white;
+            z-index: 1;   
+
+}
+
+#formy h1 {
+    margin-bottom: 20px;
+}
+
+#formy label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+#formy input, #formy select {
+    margin-bottom: 15px;
+    padding: 12px;
+    width: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.1); /* پس‌زمینه شفاف */
+    color: white; /* رنگ متن */
+    transition: border-color 0.3s, background-color 0.3s; /* انیمیشن برای تغییر */
+}
+
+#formy input:focus, #formy select:focus {
+    border-color: #6a0dad; /* رنگ حاشیه در حالت فوکوس */
+    background-color: rgba(255, 255, 255, 0.2); /* تغییر رنگ پس‌زمینه در حالت فوکوس */
+    outline: none; /* حذف حاشیه پیش‌فرض */
+}
+
+
+
+
+
+.fold {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
+  transition: all 0.5s ease-in-out;
+  background: radial-gradient(
+    100% 75% at 55%,
+    rgba(223, 113, 255, 0.8) 0%,
+    rgba(223, 113, 255, 0) 100%
+  );
+  box-shadow: 0 0 3px black;
+  border-bottom-left-radius: 0.5rem;
+  border-top-right-radius: var(--round);
+}
+.fold::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150%;
+  height: 150%;
+  transform: rotate(45deg) translateX(0%) translateY(-18px);
+  background-color: #e8e8e800;
+  pointer-events: none;
+}
+
+
+
+@keyframes dasharray {
+  from {
+    stroke-dasharray: 0 0 0 0;
+  }
+  to {
+    stroke-dasharray: 68 68 0 0;
+  }
+}
+@keyframes filled {
+  to {
+    fill: white;
+  }
+}
+
+
+
+
 
 @keyframes vanish {
   to {
@@ -33,9 +156,54 @@
     display: none;
   }
 }
+
+
+
+
+
+
+@keyframes dasharray {
+  from {
+    stroke-dasharray: 0 0 0 0;
+  }
+  to {
+    stroke-dasharray: 68 68 0 0;
+  }
+}
+@keyframes filled {
+  to {
+    fill: white;
+  }
+}
+
+
+
+
+
+@keyframes vanish {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
     </style>
 <body>
-    <nav>
+
+    <canvas id="myCanvas"></canvas>
+    <div class="nav">
 
         <a href="{{ url_for('articles.index') }}">خانه</a>
         {% if current_user.is_authenticated %}
@@ -45,13 +213,125 @@
             <a href="{{ url_for('auth.login') }}">ورود</a>
             <a href="{{ url_for('auth.register') }}">ثبت‌نام</a>
         {% endif %}
-    </nav>
-    <hr>
+    </div>
+    <div id="formy">
 
-    {% if current_user.is_authenticated %}
-    <p class="fade-out">{{ current_user.username }} , خوش آمدید!</p>
-    {% endif %}
 
+
+        <div class="points_wrapper">
+
+ 
+    </div>
+<script>
+
+
+
+        
+const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // تنظیم اندازه canvas
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // کلاس برای ایجاد چندضلعی‌های توخالی
+    function Polygon(x, y, radius, sides, speed, dx, dy) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.sides = sides;
+        this.angle = 0;
+        this.speed = speed;
+        this.dx = dx;
+        this.dy = dy;
+        this.vertices = [];
+
+        this.getVertices = function () {
+            this.vertices = [];
+            for (let i = 0; i < this.sides; i++) {
+                const angle = (i * 2 * Math.PI) / this.sides + this.angle;
+                const px = this.x + this.radius * Math.cos(angle);
+                const py = this.y + this.radius * Math.sin(angle);
+                this.vertices.push({ x: px, y: py });
+            }
+            return this.vertices;
+        };
+
+        this.update = function () {
+            if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                this.dx = -this.dx;
+            }
+            if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                this.dy = -this.dy;
+            }
+            this.x += this.dx;
+            this.y += this.dy;
+        };
+    }
+
+    let polygons = [];
+    const isMobile = window.innerWidth <= 768; // بررسی موبایل بودن
+    const numPolygons = isMobile ? 4 : 8; // تغییر تعداد بر اساس دستگاه
+
+    for (let i = 0; i < numPolygons; i++) {
+        const sides = Math.floor(Math.random() * 8) + 5;
+        const radius = Math.random() * 200 + 200;
+        const x = Math.random() * (canvas.width - radius * 2) + radius;
+        const y = Math.random() * (canvas.height - radius * 2) + radius;
+        const speed = 0.03;
+        const dx = Math.random() * 3 + 1;
+        const dy = Math.random() * 3 + 1;
+        polygons.push(new Polygon(x, y, radius, sides, speed, dx, dy));
+    }
+
+    let colorTransition = 0;
+
+    function drawConnections() {
+        const maxDistance = 300;
+        colorTransition += 0.01;
+        if (colorTransition > 1) colorTransition = 0;
+
+        for (let i = 0; i < polygons.length; i++) {
+            const vertices1 = polygons[i].getVertices();
+            for (let j = i + 1; j < polygons.length; j++) {
+                const vertices2 = polygons[j].getVertices();
+
+                for (let v1 of vertices1) {
+                    for (let v2 of vertices2) {
+                        const dist = Math.hypot(v1.x - v2.x, v1.y - v2.y);
+                        if (dist < maxDistance) {
+                            const purpleShade = Math.random() * 100 + 150;
+                            const color = `rgba(${purpleShade}, 0, ${purpleShade}, 0.5)`;
+                            ctx.beginPath();
+                            ctx.moveTo(v1.x, v1.y);
+                            ctx.lineTo(v2.x, v2.y);
+                            ctx.strokeStyle = color;
+                            ctx.lineWidth = 2;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < polygons.length; i++) {
+            polygons[i].update();
+        }
+        drawConnections();
+    }
+
+    animate();
+
+
+
+
+
+
+</script>
     {% block content %}{% endblock %}
 </body>
 </html>

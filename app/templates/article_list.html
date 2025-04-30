@@ -2,6 +2,10 @@
 {% block title %}مقالات{% endblock %}
 {% block content %}
 
+{% if current_user.is_authenticated %}
+<p class="fade-out">{{ current_user.username }} , خوش آمدید!</p>
+{% endif %}
+
 <head>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -9,19 +13,119 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <style>
+
+
+@import url('https://fonts.googleapis.com/css2?family=Lalezar&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vazirmatn:wght@100..900&display=swap');
+
+
+
     body {
-        margin: 30px;
         direction: rtl;
         font-family: 'Vazirmatn', sans-serif;
-        background-color: #f4f4f4;
         color: #cb1f1f;
     }
+.article_middle {
+    background-color:rgb(173, 36, 215);
+    padding: 40px;
+    display: flex;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 5px;
+    box-shadow: 0px 0px 2px 0px #000000;
+    border-radius: 5px 5px 5px 5px;
 
+}
+.list_article_title{
+    text-align: center;
+    font-size: 30px;
+    color: #ffffff;
+    font-family:"Lalezar", sans-serif;
+}
+
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+#searchbar {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+#list {
+    padding: 0;
+    margin: 0;
+}
+
+.animals {
+    font-size: 1.2em;
+    padding: 10px;
+    z-index: -1;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.animals:last-child {
+    border-bottom: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
     </style>
-<h2>لیست مقالات</h2>
-<ul>
+<h2 class="list_article_title">گنجینه مقالات</h2>
+<div class="container">
+    <input id="searchbar" 
+           onkeyup="search_animal()" 
+           type="text" name="search" 
+           placeholder="دنبال کدوم مقاله میگردی؟">
+
+<ul id="list">
     {% for article in articles %}
-        <li><a href="{{ url_for('articles.view_article', id=article.id) }}">{{ article.title }} ------ نوشته شده توسط {{article.author.username}} در تاریخ {{article.created_at.year}}/{{article.created_at.month}}/{{article.created_at.day}} در ساعت {{article.created_at.hour}}</a></li>
+    
+        <li class="animals">
+            <div class="article_middle"><a style="text-decoration: none;color: #ffffff;z-index: auto;" href="{{ url_for('articles.view_article', id=article.id) }}">{{ article.title }} ------ نوشته شده توسط {{article.author.username}} در تاریخ {{article.created_at.year}}/{{article.created_at.month}}/{{article.created_at.day}}</a>
+        
+        </div>
+        
+        </li>
+        
     {% endfor %}
 </ul>
+
+</div>
+<script>
+
+// JavaScript code
+
+function search_animal() {
+    let input = document.getElementById('searchbar').value
+    input = input.toLowerCase();
+    let x = document.getElementsByClassName('animals');
+
+    for (i = 0; i < x.length; i++) {
+        if (!x[i].innerHTML.toLowerCase().includes(input)) {
+            x[i].style.display = "none";
+        }
+        else {
+            x[i].style.display = "list-item";
+        }
+    }
+}
+
+</script>
 {% endblock %}

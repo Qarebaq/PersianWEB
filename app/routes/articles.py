@@ -26,7 +26,7 @@ def create_article():
         title = request.form['title']
         author = request.form['author']
         create_time = datetime.now()
-        create_time = str(create_time.year) + '-' + str(create_time.month) + '-' + str(create_time.day) 
+        create_time =  + '-' + str(create_time.month) + '-' + str(create_time.day) + ' ' + str(create_time.hour) + ':' + str(create_time.minute)
         if not title or not author:
             flash('عنوان و نویسنده الزامی است.')
         content = request.form['content']

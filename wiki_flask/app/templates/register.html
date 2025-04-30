@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ثبت‌نام</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ثبت‌نام</h1>
+        <form method="POST" action="{{ url_for('auth.register') }}">
+            <div>
+                <label for="username">نام کاربری:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">رمز عبور:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="captcha">کد امنیتی:</label>
+                <input type="text" id="captcha" name="captcha" required>
+                <img src="{{ url_for('captcha.generate') }}" alt="CAPTCHA">
+            </div>
+            <button type="submit">ثبت‌نام</button>
+        </form>
+        <p><a href="{{ url_for('auth.login') }}">قبلاً ثبت‌نام کرده‌اید؟ وارد شوید.</a></p>
+    </div>
+</body>
+</html>
