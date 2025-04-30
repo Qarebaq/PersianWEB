@@ -11,7 +11,13 @@
     body {
         direction: rtl;
         font-family: 'Vazirmatn', sans-serif;
+        background-color: black;
 
+    }
+    a {
+
+        text-decoration: none;
+        color: white;
     }
     .nav {
         z-index: 4;
@@ -19,7 +25,7 @@
     }
 
     .fade-out {
-  animation: vanish 3s forwards;
+  animation: vanish 5s forwards;
 }
 
 a{
@@ -203,20 +209,20 @@ a{
 <body>
 
     <canvas id="myCanvas"></canvas>
-    <div class="nav">
 
-        <a href="{{ url_for('articles.index') }}">خانه</a>
-        {% if current_user.is_authenticated %}
-            <a href="{{ url_for('articles.create_article') }}">مقاله جدید</a>
-            <a href="{{ url_for('auth.logout') }}">خروج</a>
-        {% else %}
-            <a href="{{ url_for('auth.login') }}">ورود</a>
-            <a href="{{ url_for('auth.register') }}">ثبت‌نام</a>
-        {% endif %}
-    </div>
     <div id="formy">
 
+    <div class="nav">
 
+        <a style="margin-left: 9px;" href="{{ url_for('articles.index') }}">خانه</a>
+        {% if current_user.is_authenticated %}
+            <a style="margin-left: 9px;" href="{{ url_for('articles.create_article') }}">مقاله جدید</a>
+            <a style="margin-left: 9px;" href="{{ url_for('auth.logout') }}">خروج</a>
+        {% else %}
+            <a style="margin-left: 9px;" href="{{ url_for('auth.login') }}">ورود</a>
+            <a style="margin-left: 9px;" href="{{ url_for('auth.register') }}">ثبت‌نام</a>
+        {% endif %}
+    </div>
 
         <div class="points_wrapper">
 
