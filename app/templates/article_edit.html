@@ -10,10 +10,9 @@
 
 <style>
 body{
+    background-color: black;
     direction: rtl;
     font-family: 'Vazirmatn', sans-serif;
-    background-color: #00000000;
-    color: #cb1f1f;
 }
 
 
@@ -23,7 +22,7 @@ body{
     عنوان: <input type="text" name="title" value="{{ article.title if mode == 'edit' else '' }}"><br>
     متن مقاله:<br>
     <textarea name="content" rows="10" cols="60">{{ article.content if mode == 'edit' else '' }}</textarea><br>
-    تصویر: <input type="file" name="image"><br>
+    تصویر: <input type="file" name="image" ><br>
     <input type="submit" value="{{ 'ثبت' if mode == 'new' else 'ذخیره تغییرات' }}">
 </form>
 {% endblock %}

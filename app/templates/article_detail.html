@@ -31,28 +31,76 @@ p {
 
 
 .article_paragraph {
-    text-align: justify;
+
+    text-align: center;
     margin: 0 auto;
     max-width: 900px;
     font-size: 16px;
     line-height: 1.5;
     font-family: 'Vazir', sans-serif;
 }
+h2{
+    color: white;
+}
+
+
+.content {
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 500px;
+    color: white;
+    justify-content: center;
+
+}
+
+
+
+
+.row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    .cell {
+      padding: 10px 20px;
+    }
 
 </style>
+<br>
+<br>
 
-<h2>{{ article.title }}</h2>
-<h3>{{article.author.username}}</h3>
-<h4>{{article.created_at.year}}/{{article.created_at.month}}/{{article.created_at.day}}</h4>
-<hr>
 {% if article.image %}
     <img class="article_img" src="{{ url_for('static', filename='uploads/' + article.image) }}" width="300"><br>
 {% endif %}
-<p style="color: #cb1f1f;" class="article_paragraph">{{ article.content }}</p>
 
+<h2>{{ article.title }}</h2>
+<div class="row">
+    <div class="cell"><h4> شروع شده توسط {{article.author.username}}</h4></div>
+    <div class="cell"><h4 > نوشته شده در {{article.created_at.year}}/{{article.created_at.month}}/{{article.created_at.day}}</h4>
+    </div>
+  </div>
+
+
+
+
+
+
+<hr>
+
+<div class="content">
+<p  style="color: white;text-align: center;justify-content: center;" class="article_paragraph">{{ article.content }}</p>
+</div>
+<br>
+<br>
+<br>
 <a href="{{ url_for('articles.edit_article', id=article.id) }}">ویرایش</a> |
 <a  href="{{ url_for('articles.article_pdf', id=article.id) }}">دانلود </a>
+<br>
 <form method="post" action="{{ url_for('articles.delete_article', id=article.id) }}">
+    <br>
     <button type="submit">حذف</button>
 </form>
 
